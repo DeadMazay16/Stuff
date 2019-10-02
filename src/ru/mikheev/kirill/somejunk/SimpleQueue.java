@@ -8,6 +8,7 @@ package ru.mikheev.kirill.somejunk;
  * @param <T> type to be queued
  */
 
+
 public class SimpleQueue<T> {
 
     /**
