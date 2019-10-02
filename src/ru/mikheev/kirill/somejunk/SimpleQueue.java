@@ -1,6 +1,21 @@
 package ru.mikheev.kirill.somejunk;
 
+/**
+ * The SimpleQueue class is designed for the orderly transfer of parameters between objects.
+ *
+ * @version 1.0  02 oct 2019
+ * @author Kirill Mikheev
+ * @param <T> type to be queued
+ */
+
+
 public class SimpleQueue<T> {
+
+    /**
+     * This class is a simple queue unit that stores data.
+     * @param <Temp> type that contained by one unit
+     */
+
     private class QueueMember<Temp>{
 
         private Temp data;
@@ -27,10 +42,15 @@ public class SimpleQueue<T> {
         }
     }
 
+    /** The first element of queue.*/
     private QueueMember<T> root;
 
     public SimpleQueue(){}
 
+    /**
+     * Add new element at the end of queue.
+     * @param data data that new member should contain
+     */
     public void push(T data){
         if(root == null){
             root = new QueueMember<>(data);
@@ -43,6 +63,10 @@ public class SimpleQueue<T> {
         }
     }
 
+    /**
+     * Extract data of first element and delete it from queue.
+     * @return data of <T>-type or null if there is no members in queue
+     */
     public T pop(){
         if(root == null){
             return null;
