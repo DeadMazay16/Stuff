@@ -1,13 +1,20 @@
 package ru.mikheev.kirill;
 
-import ru.mikheev.kirill.somejunk.Calculator;
-import ru.mikheev.kirill.somejunk.SimpleQueue;
+
+import ru.mikheev.kirill.somejunk.AVLTree;
 
 public class Stuff {
     public static void main(String[] args){
         System.out.println("PUFF");
-        Calculator calculator = new Calculator();
-
-        System.out.println(calculator.calculate("2 + 2 + 3"));
+        AVLTree<Integer> myTree = new AVLTree<>();
+        for (int i = 0; i < 10; i++){
+            myTree.add(i);
+            System.out.println(myTree);
+        }
+        for (int i = 0; i < 10; i++){
+            System.out.println(i);
+            System.out.println(myTree);
+            myTree.remove(i);
+        }
     }
 }

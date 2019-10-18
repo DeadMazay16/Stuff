@@ -1,5 +1,7 @@
 package ru.mikheev.kirill.somejunk;
 
+import java.util.TreeSet;
+
 public class AVLTree<T extends Comparable<T> > {
 
     private class TreeMember{
@@ -7,14 +9,11 @@ public class AVLTree<T extends Comparable<T> > {
         private T data;
         private TreeMember left;
         private TreeMember right;
-        private TreeMember parent;
+        private Integer height;
 
         TreeMember(T data){
             this.data = data;
-        }
-
-        private void setData(T data){
-            this.data = data;
+            height = 1;
         }
 
         private void setLeft(TreeMember left){
@@ -25,8 +24,8 @@ public class AVLTree<T extends Comparable<T> > {
             this.right = right;
         }
 
-        private void setParent(TreeMember parent){
-            this.parent = parent;
+        private void setHeight(Integer height){
+            this.height = height;
         }
 
         private T getData(){
@@ -41,73 +40,8 @@ public class AVLTree<T extends Comparable<T> > {
             return right;
         }
 
-        private TreeMember getParent() {
-            return parent;
-        }
-
-        private boolean isLeaf(){
-            return right == null && left == null;
-        }
-
-        private boolean hasLeft(){
-            return left != null;
-        }
-
-        private boolean hasRight(){
-            return right != null;
-        }
-
-        private boolean hasParent(){
-            return parent == null;
-        }
-
-        private boolean isRoot(){
-            return  hasParent();
-        }
-
-        private boolean contain(T data){
-            if(this.data.compareTo(data) == 0){
-                return true;
-            }
-            if(this.data.compareTo(data) > 0 && this.hasLeft()){
-                return left.contain(data);
-            }
-            if(this.data.compareTo(data) < 0 && this.hasRight()){
-                return right.contain(data);
-            }
-            return false;
-        }
-
-        private void addChild(TreeMember child){
-            if(this.data.compareTo(child.getData()) > 0){
-                if(!this.hasLeft()){
-                    this.setLeft(child);
-                    child.setParent(this);
-                }else{
-                    left.addChild(child);
-                }
-            }else{
-                if(!this.hasRight()){
-                    this.setRight(child);
-                    child.setParent(this);
-                }else{
-                    right.addChild(child);
-                }
-            }
-        }
-
-        private int subTreeSize(){
-            if(isLeaf()){
-                return 1;
-            }
-            int answ = 1;
-            if(hasLeft()){
-                answ += left.subTreeSize();
-            }
-            if(hasRight()){
-                answ += right.subTreeSize();
-            }
-            return answ;
+        private Integer getHeight(){
+            return height;
         }
     }
 
@@ -115,22 +49,182 @@ public class AVLTree<T extends Comparable<T> > {
 
     public AVLTree(){}
 
-    public boolean add(T data){
-        if(root.contain(data)){
-            return false;
+    public void add(T data){
+        if(!contain(data)){
+            root = insert(root, data);
         }
-        TreeMember tmp = new TreeMember(data);
-        root.addChild(tmp);
-        update();
-        return true;
     }
 
-    public T remove(TreeMember tmp){
-        if(!root.contain(tmp.data)){
+    public T remove(TreeMember reference){
+        if(!contain(reference)){
             return null;
         }
-        return null;
+        TreeMember removed = deleteByReference(root, reference);
+        return removed.getData();
     }
 
-    private void update(){}
+    public T remove(T data){
+        if(!contain(data)){
+            return null;
+        }
+        TreeMember removed = deleteByData(root, data);
+        return removed.getData();
+    }
+
+    public boolean contain(T data){
+        TreeMember next = root;
+        while (next != null){
+            if(next.getData().compareTo(data) == 0){
+                return true;
+            }
+            if(next.getData().compareTo(data) > 0){
+                next = next.getLeft();
+            }else{
+                next = next.getRight();
+            }
+        }
+
+        return false;
+    }
+
+    public boolean contain(TreeMember tmp){
+        return contain(tmp.getData());
+    }
+
+    public Integer getSize(){
+        return countTreeMembers(root);
+    }
+
+    @Override
+    public String toString() {
+        return test(root);
+    }
+
+    private String test(TreeMember next){
+        if(next == null) return "";
+        return "" + next.getData() + test(next.getRight()) + test(next.getLeft());
+    }
+
+    private TreeMember insert(TreeMember next, T data) {
+        if (next == null){
+            return new TreeMember(data);
+        }
+        if(next.getData().compareTo(data) > 0){
+            next.setLeft(insert(next.getLeft(), data));
+        }else{
+            next.setRight(insert(next.getRight(), data));
+        }
+        return balance(next);
+    }
+
+    private TreeMember deleteByData(TreeMember next, T data){
+        if( next == null ) return null;
+        if( next.getData().compareTo(data) > 0 ) {
+            next.setLeft( deleteByData(next.getLeft(), data) );
+        }else{
+            if( next.getData().compareTo(data) < 0 ) {
+                next.setRight( deleteByData(next.getRight(), data) );
+            }else{
+                TreeMember l = next.getLeft();
+                TreeMember r = next.getRight();
+                next.setRight(null);
+                next.setLeft(null);
+                if( r == null ){
+                    return l;
+                }
+                TreeMember min = findMin(r);
+                min.setRight(removeMin(r));
+                min.setLeft(l);
+                return balance(min);
+            }
+        }
+        return balance(next);
+    }
+
+    private TreeMember deleteByReference(TreeMember next, TreeMember reference){
+        if( next == null ) return null;
+        if(next == reference) {
+            TreeMember l = next.getLeft();
+            TreeMember r = next.getRight();
+            next.setRight(null);
+            next.setLeft(null);
+            if (r == null) {
+                return l;
+            }
+            TreeMember min = findMin(r);
+            min.setRight(removeMin(r));
+            min.setLeft(l);
+            return balance(min);
+        }
+        next.setLeft(deleteByReference(next.getLeft(), reference));
+        next.setRight(deleteByReference(next.getRight(), reference));
+        return balance(next);
+    }
+
+    private Integer height(TreeMember root){
+        return root == null ? 0 : root.getHeight();
+    }
+
+    private Integer bFactor(TreeMember root){
+        return height(root.getRight()) - height(root.getLeft()) ;
+    }
+
+    private void resetHeight(TreeMember root){
+        Integer hl = height(root.getLeft()) + 1;
+        Integer hr = height(root.getRight()) + 1;
+        root.setHeight( hl > hr  ? hl : hr );
+    }
+
+    private TreeMember rotateRight(TreeMember root){
+        TreeMember oLeft = root.getLeft();
+        root.setLeft(oLeft.getRight());
+        oLeft.setRight(root);
+        resetHeight(root);
+        resetHeight(oLeft);
+        return oLeft;
+    }
+
+    private TreeMember rotateLeft(TreeMember root){
+        TreeMember oRight = root.getRight();
+        root.setRight(oRight.getLeft());
+        oRight.setLeft(root);
+        resetHeight(root);
+        resetHeight(oRight);
+        return oRight;
+    }
+
+    private TreeMember balance(TreeMember root){
+        resetHeight(root);
+        if( bFactor(root) == 2 ) {
+            if( bFactor( root.getRight() ) < 0 )
+                root.setRight( rotateRight( root.getRight() ) );
+            return rotateLeft(root);
+        }
+
+        if( bFactor(root) == -2 ) {
+            if( bFactor(root.getLeft()) > 0  )
+                root.setLeft( rotateLeft(root.getLeft() ) );
+            return rotateRight(root);
+        }
+
+        return root;
+    }
+
+    private Integer countTreeMembers(TreeMember root){
+        if(root == null) {
+            return 0;
+        }
+        return 1 + countTreeMembers(root.getLeft()) + countTreeMembers(root.getRight());
+    }
+
+    private TreeMember removeMin(TreeMember next){
+        if( next.getLeft() == null )
+            return next.getRight();
+        next.setLeft(removeMin(next.getLeft()));
+        return balance(next);
+    }
+
+    private TreeMember findMin(TreeMember next) {
+        return next.getLeft() != null ? findMin(next.getLeft()) : next;
+    }
 }
