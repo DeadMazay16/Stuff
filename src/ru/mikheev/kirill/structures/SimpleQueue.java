@@ -1,4 +1,4 @@
-package ru.mikheev.kirill.somejunk;
+package ru.mikheev.kirill.structures;
 
 /**
  * The SimpleQueue class is designed for the orderly transfer of parameters between objects.
