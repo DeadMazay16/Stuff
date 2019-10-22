@@ -36,6 +36,9 @@ public class ClassInformationHolder {
     }
 
     public void getAllInformation(){
+        if(heldClass == null){
+            return;
+        }
         Field[] fields = heldClass.getFields();
         Method[] methods = heldClass.getMethods();
         Constructor[] constructors = heldClass.getConstructors();
