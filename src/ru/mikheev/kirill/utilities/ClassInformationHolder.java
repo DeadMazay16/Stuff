@@ -43,6 +43,7 @@ public class ClassInformationHolder {
         Method[] methods = heldClass.getMethods();
         Constructor[] constructors = heldClass.getConstructors();
         Pattern pattern = Pattern.compile("\\w+\\.");
+        System.out.println("Package - " + heldClass.getPackageName());
         System.out.println("Fields:");
 
         for (Field tmp : fields){
