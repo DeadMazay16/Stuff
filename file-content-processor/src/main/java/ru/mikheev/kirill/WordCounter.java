@@ -4,11 +4,11 @@ import java.io.File;
 
 public abstract class WordCounter {
 
-    private final File file;
+    protected final File file;
 
     public WordCounter(String filePath) {
         this.file = new File(filePath);
     }
 
-    public abstract long countWord(String word);
+    public abstract long countWord(String wordToCount);
 }
