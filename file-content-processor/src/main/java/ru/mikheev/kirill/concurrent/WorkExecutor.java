@@ -1,4 +1,4 @@
-package ru.mikheev.kirill.worker;
+package ru.mikheev.kirill.concurrent;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -8,12 +8,10 @@ public class WorkExecutor {
     private Worker[] workers;
 
     private AtomicLong result = new AtomicLong(0);
-    private final String wordToCount;
 
     private boolean isWorkDone = false;
 
     public WorkExecutor(String wordToCount, int workersCount, int queueSize) {
-        this.wordToCount = wordToCount;
         this.taskQueue = new TaskQueue(queueSize);
         this.workers = new Worker[workersCount];
         for(int i = 0 ; i < workersCount; i++) {

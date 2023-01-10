@@ -1,11 +1,19 @@
 package ru.mikheev.kirill;
 
+import ru.mikheev.kirill.counter.ConcurrentWordCounter;
+import ru.mikheev.kirill.counter.SimpleWordCounter;
+import ru.mikheev.kirill.counter.WordCounter;
+
 import java.io.File;
 
 public class FileContentProcessor {
 
 
     public static void main(String[] args) throws Exception {
+        testCounters();
+    }
+
+    public static void testCounters() {
         File currDir = new File(".");
         String currDirPath = currDir.getAbsolutePath().substring(0, currDir.getAbsolutePath().length() - 2);
         FileGenerator fileGenerator = new FileGenerator(currDirPath + "\\src\\test\\resource", "test");

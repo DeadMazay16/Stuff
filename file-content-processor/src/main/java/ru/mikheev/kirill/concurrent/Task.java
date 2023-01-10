@@ -1,4 +1,4 @@
-package ru.mikheev.kirill.worker;
+package ru.mikheev.kirill.concurrent;
 
 public class Task {
 

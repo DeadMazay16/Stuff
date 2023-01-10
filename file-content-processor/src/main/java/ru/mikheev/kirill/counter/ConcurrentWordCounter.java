@@ -1,6 +1,6 @@
-package ru.mikheev.kirill;
+package ru.mikheev.kirill.counter;
 
-import ru.mikheev.kirill.worker.WorkExecutor;
+import ru.mikheev.kirill.concurrent.WorkExecutor;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

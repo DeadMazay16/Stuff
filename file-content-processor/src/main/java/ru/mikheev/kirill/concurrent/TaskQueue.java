@@ -1,4 +1,4 @@
-package ru.mikheev.kirill.worker;
+package ru.mikheev.kirill.concurrent;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;

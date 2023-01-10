@@ -1,6 +1,8 @@
 package ru.mikheev.kirill;
 
 import org.openjdk.jmh.annotations.*;
+import ru.mikheev.kirill.counter.SimpleWordCounter;
+import ru.mikheev.kirill.counter.WordCounter;
 
 import java.util.concurrent.TimeUnit;
 

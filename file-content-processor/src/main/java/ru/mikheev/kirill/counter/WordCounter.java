@@ -1,4 +1,4 @@
-package ru.mikheev.kirill;
+package ru.mikheev.kirill.counter;
 
 import java.io.File;
 
