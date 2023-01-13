@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SelectionSort implements ISort {
     /**
-     * Метод принимает сортирует предоставленный ему массив Comparable объектов
+     * Метод принимает и сортирует предоставленный ему массив Comparable объектов
      *
      * @param list массив, который нужно отсортировать
      * @param ascending если true, то сортируется по возрастанию, иначе по убыванию
