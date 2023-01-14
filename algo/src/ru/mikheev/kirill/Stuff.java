@@ -1,14 +1,7 @@
 package ru.mikheev.kirill;
 
-import ru.mikheev.kirill.sorting.ISort;
-import ru.mikheev.kirill.sorting.ParallelQuickSort;
-import ru.mikheev.kirill.sorting.QuickSort;
-import ru.mikheev.kirill.structures.AVLTree;
-import ru.mikheev.kirill.utilities.ClassInformationHolder;
+import ru.mikheev.kirill.sorting.CountSort;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Stuff {
@@ -16,16 +9,15 @@ public class Stuff {
         //System.out.println("PUFF");
 //        ClassInformationHolder cih = new ClassInformationHolder(AVLTree.class);
 //        cih.getAllInformation();
-
-        List<Integer> list = getList();
-        ISort sort = new ParallelQuickSort();
-        sort.sort(list, true);
+        int[] list = getList();
+        var sort = new CountSort();
+        sort.sort(list, 0 ,1000, true);
     }
 
-    public static List<Integer> getList() {
-        var result = new ArrayList<Integer>(100_000_000);
-        for(int i = 0; i < 100_000_000; i++) {
-            result.add(ThreadLocalRandom.current().nextInt(0, 10000));
+    public static int[] getList() {
+        var result = new int[1_000_000_000];
+        for(int i = 0; i < 1_000_000_000; i++) {
+            result[i] = ThreadLocalRandom.current().nextInt(0, 100);
         }
         return result;
     }

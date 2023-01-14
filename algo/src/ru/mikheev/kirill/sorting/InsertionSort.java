@@ -14,12 +14,12 @@ public class InsertionSort implements ISort {
      * Метод принимает и сортирует предоставленный ему массив Comparable объектов
      *
      * @param list      массив, который нужно отсортировать
-     * @param ascending если true, то сортируется по возрастанию, иначе по убыванию
+     * @param isAscending если true, то сортируется по возрастанию, иначе по убыванию
      */
     @Override
-    public <T extends Comparable<T>> void sort(List<T> list, boolean ascending) {
+    public <T extends Comparable<T>> void sort(List<T> list, boolean isAscending) {
         int pivot = 1;
-        Comparator<T> comparator = (first, second) -> ascending ? first.compareTo(second) : second.compareTo(first);
+        Comparator<T> comparator = isAscending ? Comparable::compareTo : Comparator.reverseOrder();
         while(pivot != list.size()) {
             int second_pivot = pivot - 1;
             while(second_pivot >= 0 && comparator.compare(list.get(pivot), list.get(second_pivot)) < 0) {

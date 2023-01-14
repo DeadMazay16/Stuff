@@ -6,9 +6,9 @@ import java.util.List;
 public class QuickSort implements ISort {
 
     @Override
-    public <T extends Comparable<T>> void sort(List<T> list, boolean ascending) {
+    public <T extends Comparable<T>> void sort(List<T> list, boolean isAscending) {
         if(list.size() == 0) return;
-        partSort(list, 0, list.size() - 1, ascending ? Comparable::compareTo : (first, second) -> second.compareTo(first));
+        partSort(list, 0, list.size() - 1, isAscending ? Comparable::compareTo : Comparator.reverseOrder());
     }
 
     private <T extends Comparable<T>> void partSort(List<T> list, int begin, int end, Comparator<T> comparator) {

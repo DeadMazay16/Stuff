@@ -11,9 +11,9 @@ public class ParallelQuickSort implements ISort {
 
 
     @Override
-    public <T extends Comparable<T>> void sort(List<T> list, boolean ascending) {
+    public <T extends Comparable<T>> void sort(List<T> list, boolean isAscending) {
         ForkJoinPool forkJoinPool = ForkJoinPool.commonPool();
-        var sortAction = new PartSort<>(list, 0, list.size() - 1, ascending ? Comparable::compareTo : (first, second) -> second.compareTo(first));
+        var sortAction = new PartSort<>(list, 0, list.size() - 1, isAscending ? Comparable::compareTo : (first, second) -> second.compareTo(first));
         forkJoinPool.execute(sortAction);
         sortAction.join();
 

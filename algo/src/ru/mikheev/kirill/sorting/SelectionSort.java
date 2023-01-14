@@ -13,14 +13,14 @@ public class SelectionSort implements ISort {
      * Метод принимает и сортирует предоставленный ему массив Comparable объектов
      *
      * @param list массив, который нужно отсортировать
-     * @param ascending если true, то сортируется по возрастанию, иначе по убыванию
+     * @param isAscending если true, то сортируется по возрастанию, иначе по убыванию
      * @param <T> Тип элементов массива, обязательно Comparable<T>
      */
     @Override
-    public <T extends Comparable<T>> void sort(List<T> list, boolean ascending) {
+    public <T extends Comparable<T>> void sort(List<T> list, boolean isAscending) {
         int pivot = 0;
         while (pivot != list.size() - 1) {
-            int controlIndex = ascending ? min(list, pivot) : max(list, pivot);
+            int controlIndex = isAscending ? min(list, pivot) : max(list, pivot);
             T tmp = list.get(controlIndex);
             list.set(controlIndex, list.get(pivot));
             list.set(pivot, tmp);
