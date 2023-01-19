@@ -11,12 +11,12 @@ import java.nio.charset.Charset;
 
 public class ConcurrentWordCounter extends WordCounter {
 
-    public ConcurrentWordCounter(String filePath) {
-        super(filePath);
+    public ConcurrentWordCounter(String filePath, String wordToCount) {
+        super(filePath, wordToCount);
     }
 
     @Override
-    public long countWord(String wordToCount) {
+    public long countWord() {
         WorkExecutor workExecutor = new WorkExecutor(wordToCount, 4, 60);
         try (BufferedReader bufferedReader = new BufferedReader(
                 new FileReader(this.file, Charset.forName("Cp1251"))

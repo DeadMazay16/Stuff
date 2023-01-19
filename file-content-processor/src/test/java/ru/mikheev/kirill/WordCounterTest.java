@@ -15,7 +15,7 @@ public class WordCounterTest {
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @BenchmarkMode(Mode.AverageTime)
     public void simpleWordCounterTest() {
-        WordCounter wordCounter = new SimpleEqualsWordCounter("src\\test\\resource\\wap.txt");
-        var result = wordCounter.countWord("Пьер");
+        WordCounter wordCounter = new SimpleEqualsWordCounter("src\\test\\resource\\wap.txt", "Пьер");
+        var result = wordCounter.countWord();
     }
 }

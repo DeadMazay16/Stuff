@@ -10,12 +10,12 @@ import java.nio.charset.Charset;
 
 public abstract class SimpleWordCounter extends WordCounter {
 
-    public SimpleWordCounter(String filePath) {
-        super(filePath);
+    public SimpleWordCounter(String filePath, String wordToCount) {
+        super(filePath, wordToCount);
     }
 
     @Override
-    public long countWord(String wordToCount) {
+    public long countWord() {
 
         long counter = 0L;
         try (BufferedReader bufferedReader = new BufferedReader(
@@ -23,7 +23,7 @@ public abstract class SimpleWordCounter extends WordCounter {
         )){
             String line = bufferedReader.readLine();
             while (line != null) {
-                count(line, wordToCount);
+                counter += count(line);
                 line = bufferedReader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -34,5 +34,5 @@ public abstract class SimpleWordCounter extends WordCounter {
         return counter;
     }
 
-    protected abstract int count(String line, String wordToCount);
+    protected abstract int count(String line);
 }
