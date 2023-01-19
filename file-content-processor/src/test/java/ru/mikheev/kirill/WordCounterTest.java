@@ -1,7 +1,7 @@
 package ru.mikheev.kirill;
 
 import org.openjdk.jmh.annotations.*;
-import ru.mikheev.kirill.counter.SimpleWordCounter;
+import ru.mikheev.kirill.counter.simple.SimpleEqualsWordCounter;
 import ru.mikheev.kirill.counter.WordCounter;
 
 import java.util.concurrent.TimeUnit;
@@ -15,7 +15,7 @@ public class WordCounterTest {
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
     @BenchmarkMode(Mode.AverageTime)
     public void simpleWordCounterTest() {
-        WordCounter wordCounter = new SimpleWordCounter("src\\test\\resource\\wap.txt");
+        WordCounter wordCounter = new SimpleEqualsWordCounter("src\\test\\resource\\wap.txt");
         var result = wordCounter.countWord("Пьер");
     }
 }

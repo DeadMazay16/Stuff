@@ -1,6 +1,7 @@
-package ru.mikheev.kirill.counter;
+package ru.mikheev.kirill.counter.concurrent;
 
 import ru.mikheev.kirill.concurrent.WorkExecutor;
+import ru.mikheev.kirill.counter.WordCounter;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

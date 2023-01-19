@@ -1,4 +1,4 @@
-package ru.mikheev.kirill;
+package ru.mikheev.kirill.gen;
 
 import java.io.BufferedWriter;
 import java.io.File;
