@@ -3,7 +3,7 @@ package ru.mikheev.kirill.request.limiter.commons;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DefaultProcessor implements RequestProcessor {
+public class DefaultProcessor extends RequestProcessor {
 
     private final AtomicInteger requestCounter = new AtomicInteger(0);
 

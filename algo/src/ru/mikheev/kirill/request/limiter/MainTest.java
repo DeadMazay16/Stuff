@@ -14,10 +14,12 @@ public class MainTest {
     public static void main(String[] args) {
         Random random = new Random();
         DefaultProcessor defaultProcessor = new DefaultProcessor();
-        RequestProcessor fullChain = new TokenBucketFilter(defaultProcessor, 4, 2000, 4);
+        RequestProcessor fullChain = new TokenBucketFilter(defaultProcessor, 4, 2300, 4);
         ExecutorService threadPool = Executors.newFixedThreadPool(20);
         long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() - startTime < 2000) {
+        System.out.println("START " + startTime);
+        long endTime =  System.currentTimeMillis();
+        while (endTime - startTime < 2000) {
             threadPool.execute(() -> {
                 try {
                     Thread.sleep(random.nextInt(50));
@@ -28,7 +30,10 @@ public class MainTest {
                         null
                 ));
             });
+            endTime =  System.currentTimeMillis();
         }
+
+        System.out.println("END " + endTime + " " +  (endTime - startTime));
         System.out.println("Result: " + defaultProcessor.getRequestCounter());
         threadPool.shutdownNow();
     }
